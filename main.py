@@ -3,15 +3,19 @@ import sys
 import pandas as pd
 from boto3 import Session
 
+boto_session = Session(
+    aws_access_key_id=os.environ["aws_access_key_id"],
+    aws_secret_access_key=os.environ["aws_secret_access_key"],
+    region_name="ap-south-1"
+)
 
-boto_session = Session(profile_name="irctc",)
 client = boto_session.client('logs')
 
 # Just replace it with your destination path
 csv_folder_path = r'C:\Users\PrakharDeepSingh\Desktop\\'
 
 
-def read_logs(logStreamName="20240221"):
+def read_logs(logStreamName):
     print(logStreamName)
     try:
         log_events = client.get_log_events(
